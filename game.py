@@ -50,7 +50,7 @@ class Game:
                     self.move_unit(self.player, [1, 0])
 
     def load_map(self, file_name):
-        with open('pokemon/maps/' + file_name + ".txt") as map_file:
+        with open('maps/' + file_name + ".txt") as map_file:
             for line in map_file:
                 tiles = []
                 for i in range(0, len(line) - 1, 2):
@@ -98,6 +98,6 @@ class Game:
             self.camera[1] = max_y_position
         
 map_tile_image = {
-    "G" : pygame.transform.scale(pygame.image.load("Pokemon/Extra/grass.png"), (config.SCALE, config.SCALE)),
-    "W" : pygame.transform.scale(pygame.image.load("Pokemon/Extra/water.png"), (config.SCALE, config.SCALE)),
+    "G" : pygame.transform.scale(pygame.image.load("Extra/grass.png"), (config.SCALE, config.SCALE)),
+    "W" : pygame.transform.scale(pygame.image.load("Extra/water.png"), (config.SCALE, config.SCALE)),
 }
