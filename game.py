@@ -1,8 +1,11 @@
 import pygame
 import config
+import ultilties
 import math
 from player import Player
 from game_state import Gamestate
+from monsterfactory import MonsterFactory
+
 
 #VIDEO AT 26:30
 
@@ -13,6 +16,9 @@ class Game:
         self.game_state = Gamestate.NONE
         self.map = []
         self.camera = [0,0]
+        self.player_has_moved = False
+        self.monster_factory = MonsterFactory()
+        
     def set_up(self):
         player = Player(1, 1)
         self.player = player
@@ -23,6 +29,7 @@ class Game:
         self.load_map("01")
         
     def update(self):
+        self.player_has_moved = False
         self.screen.fill(config.BLACK)
         self.handle_events()
         
@@ -30,8 +37,27 @@ class Game:
         
         for object in self.objects:
             object.render(self.screen, self.camera)
-            print("update")
+            #Refactor when work: TIME: 6:45. VID: 4
+        self.determine_player_actions()
             
+    def determine_player_actions(self):
+        map_tile = self.map[self.player.position[1]][ self.player.position[0]]
+        print(map_tile)
+        
+        if map_tile == config.MAP_TILE_TILE:
+            return
+        
+        self.determine_pokemon_found(map_tile)
+    
+    def determine_pokemon_found(self, map_tile):
+        random_number = ultilties.generate_random_number(1, 10)
+        # 20 percent chance of getting a pokemon
+        if random_number <= 2:
+            found_monster = self.monster_factory.create_monster(map_tile)
+            print("you found a monster!")
+            print("monser type: " + found_monster.type)
+            print("attack: " + found_monster.attack)
+            print("attack: " + found_monster.health)
     def handle_events(self):
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -75,14 +101,17 @@ class Game:
             y_pos = y_pos + 1
         
     def move_unit(self, unit, position_change):
+        self.player_has_moved = False
         new_position = [unit.position[0] + position_change[0], unit.position[1] + position_change[1]]
         if new_position[0] < 0 or new_position[0] > (len(self.map[0]) - 1):
             return
         if new_position[1] < 0 or new_position[1] > (len(self.map) - 1):
             return
         
-        if self.map[new_position[1]][new_position[0]] == "W":
+        if self.map[new_position[1]][new_position[0]] == config.MAP_TILE_WATER:
             return
+        
+        self.player_has_moved = True
         
         unit.update_position(new_position)
         
@@ -98,6 +127,7 @@ class Game:
             self.camera[1] = max_y_position
         
 map_tile_image = {
-    "G" : pygame.transform.scale(pygame.image.load("Extra/grass.png"), (config.SCALE, config.SCALE)),
-    "W" : pygame.transform.scale(pygame.image.load("Extra/water.png"), (config.SCALE, config.SCALE)),
+    config.MAP_TILE_GRASS : pygame.transform.scale(pygame.image.load("Extra/grass.png"), (config.SCALE, config.SCALE)),
+    config.MAP_TILE_WATER : pygame.transform.scale(pygame.image.load("Extra/water.png"), (config.SCALE, config.SCALE)),
+    config.MAP_TILE_TILE : pygame.transform.scale(pygame.image.load("Extra/tile.png"), (config.SCALE, config.SCALE)),
 }

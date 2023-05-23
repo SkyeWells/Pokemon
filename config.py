@@ -16,6 +16,9 @@ PINK = (255,105,180)
 HOT_PINK = (255,20,147)
 
 #------------------------------------------------------------
+MAP_TILE_GRASS = "G"
+MAP_TILE_WATER = "W"
+MAP_TILE_TILE = "T"
 SCALE = 32
 SCREEN_HEIGHT = 480
 SCREEN_WIDTH = 640

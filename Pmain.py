@@ -1,7 +1,7 @@
 import pygame
 import config
 from game_state import Gamestate
-#Timestamp 1:12
+#Timestamp 30:34 havent done what he was doing during 30:34
 from game import Game
 pygame.init()
 FPS = 60
