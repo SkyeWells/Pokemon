@@ -6,9 +6,6 @@ from player import Player
 from game_state import Gamestate
 from monsterfactory import MonsterFactory
 
-
-#VIDEO AT 26:30
-
 class Game:
     def __init__(self, screen):
         self.screen = screen
@@ -38,8 +35,11 @@ class Game:
         for object in self.objects:
             object.render(self.screen, self.camera)
             #Refactor when work: TIME: 6:45. VID: 4
-        self.determine_player_actions()
             
+        if self.player_has_moved:
+            self.determine_player_actions()
+            
+        
     def determine_player_actions(self):
         map_tile = self.map[self.player.position[1]][ self.player.position[0]]
         print(map_tile)
@@ -56,8 +56,8 @@ class Game:
             found_monster = self.monster_factory.create_monster(map_tile)
             print("you found a monster!")
             print("monser type: " + found_monster.type)
-            print("attack: " + found_monster.attack)
-            print("attack: " + found_monster.health)
+            print("attack: " + str(found_monster.attack))
+            print("attack: " + str(found_monster.health))
     def handle_events(self):
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
