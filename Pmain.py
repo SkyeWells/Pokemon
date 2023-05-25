@@ -2,7 +2,7 @@ import pygame
 import config
 from game_state import Gamestate
 from menu import Menu
-#Timestamp 30:34 havent done what he was doing during 30:34
+#Timestamp 11:52 5th vid
 from game import Game
 pygame.init()
 FPS = 60
