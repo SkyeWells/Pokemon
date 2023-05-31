@@ -1,9 +1,10 @@
+import monster
 import pygame
-import config
-
 class Monster:
-    def __init__(self, monster_type):
+    def __init__(self, monster_type, id):
         print("player created")
         self.type = monster_type
         self.health = 10
         self.attack = 10
+        self.id = id
+        self.image = pygame.image.load("Monsters/" + f"{self.id:03d}" + ".png")

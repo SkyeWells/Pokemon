@@ -2,7 +2,9 @@ import pygame
 import config
 from game_state import Gamestate
 from menu import Menu
-#Timestamp 11:52 5th vid
+#Timestamp 52:19 5th vid
+#6th vid link: https://www.youtube.com/watch?v=5dgAxPRSNnE
+#program is crashing.
 from game import Game
 pygame.init()
 FPS = 60

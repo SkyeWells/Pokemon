@@ -7,5 +7,5 @@ class Gamestate(Enum):
 
 class CurrentGameState(Enum):
     MAP = 0,
-    BATTLE = 1,
+    BATTLE = 1
     

@@ -6,6 +6,7 @@ from player import Player
 from game_state import Gamestate, CurrentGameState
 from monsterfactory import MonsterFactory
 from game_view.map import Map
+from game_view.battle import Battle
 
 class Game:
     def __init__(self, screen):
@@ -27,21 +28,18 @@ class Game:
         self.map.load("01")
         
     def update(self):
-        if self.game.state == CurrentGameState.MAP:
+        if self.game_state == CurrentGameState.MAP:
             self.player_has_moved = False
             self.screen.fill(config.BLACK)
             self.handle_events()
             
             self.map.render(self.screen, self.player, self.objects)
-            
-            for object in self.objects:
-                object.render(self.screen, self.map.camera)
-                #Refactor when work: TIME: 6:45. VID: 4
                 
             if self.player_has_moved:
                 self.determine_player_actions()
         elif self.current_game_state == CurrentGameState.BATTLE:
             self.battle.update()
+            self.battle.render()
         
             
         
@@ -62,9 +60,10 @@ class Game:
             print("you found a monster!")
             print("monser type: " + found_monster.type)
             print("attack: " + str(found_monster.attack))
-            print("attack: " + str(found_monster.health))
+            print("health: " + str(found_monster.health))
             
-            self.battle = Battle(self.screen)
+            self.battle = Battle(self.screen, found_monster, self.player)
+            self.current_game_state = CurrentGameState.BATTLE
     def handle_events(self):
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
